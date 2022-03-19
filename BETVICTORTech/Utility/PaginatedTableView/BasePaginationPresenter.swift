@@ -19,9 +19,7 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
     
     var items: [Element]
     var pageData: PageData
-    var currentToken: String = ""
-    var paginatedUseCase: UseCaseImp<PaginationResult<Element>>?
-    var useCase: UseCaseImp<[Element]>?
+    var paginatedUseCase: UseCaseImp<PaginationResult<Element>>
     var useCaseType: UseCaseType
     weak var viewController: BasePaginationViewPresenter?
     var navigator: BaseNavigator
@@ -31,7 +29,7 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
         self.paginatedUseCase = paginatedUseCase
         self.useCaseType = useCaseType
         self.navigator = navigator
-        self.pageData = PageData(nextToken: "")
+        self.pageData = PageData()
         self.items = []
         self.emptyType = emptyType
     }
@@ -40,13 +38,18 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
         self.viewController = viewController
     }
     
+    override func viewDidLoad() {
+        fetch(ptr: true)
+    }
+    
     func fetch(ptr: Bool) {
         if ptr {
             self.items = []
-            pageData.nextToken = ""
+            pageData.nextToken = nil
+            viewController?.deleteViewModels()
         }
         pageData.isLoading = true
-        paginatedUseCase?.execute(nextToken: pageData.nextToken, type: useCaseType) { [self] result in
+        paginatedUseCase.execute(nextToken: pageData.nextToken, type: useCaseType) { [self] result in
             switch result {
             case .success(let paginationResult):
                 handleResult(paginationResult: paginationResult)
@@ -79,16 +82,16 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
     
     func handleResult(paginationResult: PaginationResult<Element>) {
         self.items.append(contentsOf: paginationResult.data)
-        self.updateItems(items: paginationResult.data)
+        self.updateItems(items: paginationResult.data, includes: paginationResult.includes)
         self.pageData = paginationResult.pageData
     }
     
-    func updateItems(items: [Element]) {
+    func updateItems(items: [Element], includes: IncludeData?) {
         viewController?.setup(items.map({ItemViewModel(with: $0)}))
     }
     
     func loadMore() {
-        if pageData.nextToken == "", !pageData.isLoading {
+        if pageData.nextToken != nil, !pageData.isLoading {
             fetch(ptr: false)
         }
     }

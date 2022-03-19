@@ -19,7 +19,7 @@ final class RepositoryImp<Element: Codable>: Repository {
         return network.execute(type: UseCaseNetworkType(type: type), completion)
     }
     
-    func execute(nextToken: String, type: UseCaseType, _ completion: @escaping (Result<Element, BETVICTORError>) -> Void) {
+    func execute(nextToken: String?, type: UseCaseType, _ completion: @escaping (Result<Element, BETVICTORError>) -> Void) {
         return network.execute(nextToken: nextToken, type: UseCaseNetworkType(type: type), completion)
     }
 }

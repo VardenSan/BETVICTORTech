@@ -14,6 +14,7 @@ protocol BasePaginationViewPresenter: BaseTableViewController {
     func hideEmptyView()
     func showErrorView(errorMessage: String)
     func refreshView()
+    func deleteViewModels()
 }
 
 class BasePaginationViewController<ItemViewModel: BaseViewModel<Model>, Model, BasicTableViewCell: BasePaginationTableViewCell<ItemViewModel>>: BaseTableViewController, BasePaginationViewPresenter {
@@ -49,9 +50,9 @@ class BasePaginationViewController<ItemViewModel: BaseViewModel<Model>, Model, B
     
     func refreshView() {
         hideErrorView()
-        showLoader(view: tableView)
+        //showLoader(view: tableView)
         ptr = true
-        presenter?.fetch(ptr: ptr)
+        presenter?.viewDidLoad()
     }
     
     func setup(_ viewModels: [Any]) {
@@ -61,6 +62,10 @@ class BasePaginationViewController<ItemViewModel: BaseViewModel<Model>, Model, B
             tableView.reloadData()
             presenter?.allItemsLoaded()
         }
+    }
+    
+    func deleteViewModels() {
+        viewModels = []
     }
     
     func showEmptyView(type: EmptyType) {

@@ -20,7 +20,6 @@ final class Network<T> {
     }
     
     func makeRequest(type: UseCaseNetworkType, _ completion: @escaping (Result<Data, Error>) -> Void)  {
-        print("paso")
         let absolutePath = "\(endPoint)\(type.endpoint)"
         let httpHeaders = HTTPHeaders([
             .authorization(bearerToken: bearerToken)
@@ -37,13 +36,16 @@ final class Network<T> {
         }
     }
     
-    func makeRequest(nextToken: String, type: UseCaseNetworkType, _ completion: @escaping (Result<Data, Error>) -> Void)  {
+    func makeRequest(nextToken: String?, type: UseCaseNetworkType, _ completion: @escaping (Result<Data, Error>) -> Void)  {
         let absolutePath = "\(endPoint)\(type.endpoint)"
         var params = type.params ?? [:]
         let httpHeaders = HTTPHeaders([
             .authorization(bearerToken: bearerToken)
         ])
-        params.updateValue(nextToken, forKey: "next_token")
+        if nextToken != nil {
+            params.updateValue(nextToken!, forKey: "next_token")
+        }
+
         AF.request(absolutePath, method: type.method, parameters: params, headers: httpHeaders)
             .validate(contentType: ["application/json"])
             .responseData { response in

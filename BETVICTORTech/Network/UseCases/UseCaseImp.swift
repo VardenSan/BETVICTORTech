@@ -19,7 +19,7 @@ final class UseCaseImp<Element: Codable>: UseCase {
         return repository.execute(type: type, completion)
     }
     
-    func execute(nextToken: String, type: UseCaseType, _ completion: @escaping (Result<Element, BETVICTORError>) -> Void) {
+    func execute(nextToken: String?, type: UseCaseType, _ completion: @escaping (Result<Element, BETVICTORError>) -> Void) {
         return repository.execute(nextToken: nextToken, type: type, completion)
     }
 }

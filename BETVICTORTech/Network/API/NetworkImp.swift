@@ -33,7 +33,7 @@ public final class NetworkImp<Element: Codable> {
         }
     }
     
-    public func execute(nextToken: String, type: UseCaseNetworkType, _ completion: @escaping (Result<Element, BETVICTORError>) -> Void) {
+    public func execute(nextToken: String?, type: UseCaseNetworkType, _ completion: @escaping (Result<Element, BETVICTORError>) -> Void) {
         return network.makeRequest(nextToken: nextToken, type: type) { result in
             switch result {
             case .success(let data):

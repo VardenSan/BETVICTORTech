@@ -16,7 +16,8 @@ class TweetListTableViewCell: BasePaginationTableViewCell<TweetViewModel> {
     
     override func bind(_ viewModel: TweetViewModel) {
         nameLabel.text = viewModel.name
-        tweetTextLabel.text = viewModel.text
+        tweetTextLabel.attributedText = viewModel.text
+        avatarImageView.layer.cornerRadius = 8
         avatarImageView.kf.setImage(with: URL(string: viewModel.avatarUrl))
     }
 }
