@@ -1,14 +1,12 @@
 //
 //  UseCaseType.swift
-//  myToysTechlab
+//  BETVICTORTech
 //
-//  Created by Sergio TIMP on 5/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import Foundation
 
 public enum UseCaseType {
-    case endpointWithParams(id: String, params: [String:Any])
-    case products
-    case basket
+    case getTweets(params: String)
 }
