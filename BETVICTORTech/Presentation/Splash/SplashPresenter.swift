@@ -21,7 +21,9 @@ class SplashPresenter: SplashPresenterView {
     }
     
     func viewDidLoad() {
-        navigator.toTweetList()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.navigator.toTweetList()
+        }
     }
     
     func setViewDelegate(viewController: SplashViewPresenter) {
