@@ -1,8 +1,8 @@
 //
 //  NetworkProvider.swift
-//  myToysTechlab
+//  BETVICTORTech
 //
-//  Created by Sergio TIMP on 5/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ final class NetworkProvider {
     private var headers: [String:String]
 
     public init() {
-        apiEndpoint = "https://mytoys-code-challenge-api.herokuapp.com/api/"
+        apiEndpoint = "https://api.twitter.com/2/"
         headers = [:]
     }
     

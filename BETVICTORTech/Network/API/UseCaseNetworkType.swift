@@ -1,8 +1,8 @@
 //
 //  UseCaseNetworkType.swift
-//  myToysTechlab
+//  BETVICTORTech
 //
-//  Created by Sergio TIMP on 5/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import Alamofire
@@ -17,18 +17,16 @@ public struct UseCaseNetworkType {
     
     public var endpoint: String {
         switch type {
-        case .endpointWithParams(let id, _):
-            return "api/\(id)"
-        case .products:
-            return "products"
-        case .basket:
-            return "basket"
+        case .getTweets(_):
+            return "tweets/search/recent"
+        case .getTweet(let id):
+            return "tweets/\(id)"
         }
     }
     
     public var method: HTTPMethod {
         switch type {
-        case .products, .basket:
+        case .getTweets, .getTweet:
             return .get
         default:
             return .post
@@ -37,8 +35,10 @@ public struct UseCaseNetworkType {
     
     public var params: [String: Any]? {
         switch type {
-        case .endpointWithParams(_, let params):
-            return params
+        case .getTweets(let params):
+            return GetTweetParams(search: params).queryParams
+        case .getTweet(_):
+            return GetTweetDetailParams().queryParams
         default:
             return nil
         }

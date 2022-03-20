@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  BETVICTORTech
 //
-//  Created by Sergio TIMP on 17/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import UIKit

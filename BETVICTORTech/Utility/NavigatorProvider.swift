@@ -1,8 +1,8 @@
 //
 //  NavigatorProvider.swift
-//  myToysTechlab
+//  BETVICTORTech
 //
-//  Created by Sergio TIMP on 5/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import UIKit
@@ -10,9 +10,9 @@ import UIKit
 final class NavigatorProvider {
     
     private let services: UseCaseProvider
-    public var navigationController: UINavigationController
+    public var navigationController: BaseNavigationController
 
-    init(services: UseCaseProvider, navigationController: UINavigationController) {
+    init(services: UseCaseProvider, navigationController: BaseNavigationController) {
         self.services = services
         self.navigationController = navigationController
     }
@@ -23,35 +23,35 @@ final class NavigatorProvider {
                 navigationController: navigationController,
                 storyboard: storyboard)
         let vc = storyboard.instantiateViewController(ofType: SplashViewController.self)
-        let presenter = SplashPresenter(navigator: navigator, viewController: vc)
+        let presenter = SplashPresenter(navigator: navigator)
         vc.presenter = presenter
+        presenter.setViewDelegate(viewController: vc)
         return vc
     }
     
-    func makeProductList() -> UIViewController {
-        let storyboard = UIStoryboard(name: "Products", bundle: nil)
+    func makeTweetList() -> UIViewController {
+        let storyboard = UIStoryboard(name: "Tweets", bundle: nil)
         let navigator = DefaultNavigator(services: services, navigatorProvider: self,
                 navigationController: navigationController,
                 storyboard: storyboard)
-        let vc = storyboard.instantiateViewController(ofType: ProductListViewController.self)
-        let presenter = ProductListPresenter(useCase: services.makeUseCase(),
+        let vc = storyboard.instantiateViewController(ofType: TweetListViewController.self)
+        let presenter = TweetListPresenter(useCase: services.makeUseCase(),
                                                     navigator: navigator)
         vc.presenter = presenter
         presenter.setViewDelegate(viewController: vc)
         return vc
     }
     
-    func makeBasket(products: [Product]) -> UIViewController {
-        let storyboard = UIStoryboard(name: "Basket", bundle: nil)
+    func makeTweetDetail(tweetId: String) -> UIViewController {
+        let storyboard = UIStoryboard(name: "TweetDetail", bundle: nil)
         let navigator = DefaultNavigator(services: services, navigatorProvider: self,
                 navigationController: navigationController,
                 storyboard: storyboard)
-        let vc = storyboard.instantiateViewController(ofType: BasketViewController.self)
-        let presenter = BasketPresenter(useCase: services.makeUseCase(),
-                                                    navigator: navigator, products: products)
+        let vc = storyboard.instantiateViewController(ofType: TweetDetailViewController.self)
+        let presenter = TweetDetailPresenter(useCase: services.makeUseCase(),
+                                             navigator: navigator, tweetId: tweetId)
         vc.presenter = presenter
         presenter.setViewDelegate(viewController: vc)
         return vc
     }
-
 }

@@ -1,8 +1,8 @@
 //
 //  SplashPresenter.swift
-//  myToysTechlab
+//  BETVICTORTech
 //
-//  Created by Sergio TIMP on 6/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import Foundation
@@ -14,14 +14,17 @@ protocol SplashPresenterView {
 class SplashPresenter: SplashPresenterView {
     
     let navigator: Navigator
-    let viewController: SplashViewPresenter
+    weak var viewController: SplashViewPresenter?
             
-    init(navigator: Navigator, viewController: SplashViewPresenter) {
+    init(navigator: Navigator) {
         self.navigator = navigator
-        self.viewController = viewController
     }
     
     func viewDidLoad() {
-        navigator.toProductList()
+        navigator.toTweetList()
+    }
+    
+    func setViewDelegate(viewController: SplashViewPresenter) {
+        self.viewController = viewController
     }
 }

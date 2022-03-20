@@ -1,17 +1,17 @@
 //
 //  SplashViewController.swift
-//  myToysTechlab
+//  BETVICTORTech
 //
-//  Created by Sergio TIMP on 6/3/22.
+//  Created by Sergio on 18/3/22.
 //
 
 import UIKit
 
-protocol SplashViewPresenter {
+protocol SplashViewPresenter: AnyObject {
 
 }
 
-class SplashViewController: UIViewController, SplashViewPresenter {
+class SplashViewController: BaseViewController, SplashViewPresenter {
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -24,6 +24,6 @@ class SplashViewController: UIViewController, SplashViewPresenter {
     }
     
     func setupUI() {
-        imageView.image = UIImage(named: "mytoys-splash")
+        imageView.image = UIImage(named: "splash")
     }
 }
