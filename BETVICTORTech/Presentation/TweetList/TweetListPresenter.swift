@@ -9,6 +9,7 @@ import Foundation
 
 protocol TweetListPresenterView: BasePresenterView {
     func search(_ text: String)
+    func viewWillDisappear()
 }
 
 class TweetListPresenter: BasePaginationPresenter<Tweet, TweetViewModel, DefaultNavigator>, TweetListPresenterView {
@@ -58,5 +59,9 @@ class TweetListPresenter: BasePaginationPresenter<Tweet, TweetViewModel, Default
         searchText = text
         self.useCaseType = .getTweets(params: text)
         fetch(ptr: true)
+    }
+    
+    func viewWillDisappear() {
+        timer.invalidate()
     }
 }

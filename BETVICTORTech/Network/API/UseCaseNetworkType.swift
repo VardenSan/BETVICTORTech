@@ -19,12 +19,14 @@ public struct UseCaseNetworkType {
         switch type {
         case .getTweets(_):
             return "tweets/search/recent"
+        case .getTweet(let id):
+            return "tweets/\(id)"
         }
     }
     
     public var method: HTTPMethod {
         switch type {
-        case .getTweets:
+        case .getTweets, .getTweet:
             return .get
         default:
             return .post
@@ -35,6 +37,8 @@ public struct UseCaseNetworkType {
         switch type {
         case .getTweets(let params):
             return GetTweetParams(search: params).queryParams
+        case .getTweet(_):
+            return GetTweetDetailParams().queryParams
         default:
             return nil
         }

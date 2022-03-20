@@ -10,9 +10,9 @@ import Foundation
 protocol BasePaginationPresenterView: BasePresenter {
     func fetch(ptr: Bool)
     func loadMore()
-    func itemSelected(item: Any, indexPath: IndexPath)
+    func itemSelected(position: Int)
     func allItemsLoaded()
-    func setViewDelegate(viewController: BasePaginationViewPresenter?)
+    func setViewDelegate(viewController: BasePaginationViewPresenter)
 }
 
 class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Element>, Navigator: BaseNavigator>: BasePresenter, BasePaginationPresenterView {
@@ -34,7 +34,7 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
         self.emptyType = emptyType
     }
     
-    func setViewDelegate(viewController: BasePaginationViewPresenter?) {
+    func setViewDelegate(viewController: BasePaginationViewPresenter) {
         self.viewController = viewController
     }
     
@@ -82,8 +82,8 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
     
     func handleResult(paginationResult: PaginationResult<Element>) {
         self.items.append(contentsOf: paginationResult.data)
-        self.updateItems(items: paginationResult.data, includes: paginationResult.includes)
         self.pageData = paginationResult.pageData
+        self.updateItems(items: paginationResult.data, includes: paginationResult.includes)
     }
     
     func updateItems(items: [Element], includes: IncludeData?) {
@@ -96,10 +96,8 @@ class BasePaginationPresenter<Element: Codable, ItemViewModel: BaseViewModel<Ele
         }
     }
     
-    func itemSelected(item: Any, indexPath: IndexPath) {
-        if item is Element {
-            navigator.toItem(item: item, indexPath: indexPath)
-        }
+    func itemSelected(position: Int) {
+        navigator.toItem(item: items[position])
     }
     
     func allItemsLoaded() {

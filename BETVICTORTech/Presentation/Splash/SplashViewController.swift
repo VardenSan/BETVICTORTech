@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol SplashViewPresenter {
+protocol SplashViewPresenter: AnyObject {
 
 }
 
-class SplashViewController: UIViewController, SplashViewPresenter {
+class SplashViewController: BaseViewController, SplashViewPresenter {
     
     @IBOutlet weak var imageView: UIImageView!
     
