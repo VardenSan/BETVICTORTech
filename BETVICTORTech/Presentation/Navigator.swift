@@ -27,8 +27,12 @@ class DefaultNavigator: Navigator {
         self.storyboard = storyboard
     }
     
-    func toItem(item: Any, indexPath: IndexPath) {
-        
+    func toItem(item: Any) {
+        if item is Tweet {
+            navigatorProvider.navigationController = navigationController
+            let vc = navigatorProvider.makeTweetDetail(tweetId: (item as! Tweet).id)
+            navigationController.pushViewController(vc, animated: true)
+        }
     }
     
     func toSplash() {

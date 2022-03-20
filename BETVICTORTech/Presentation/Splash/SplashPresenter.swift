@@ -14,14 +14,17 @@ protocol SplashPresenterView {
 class SplashPresenter: SplashPresenterView {
     
     let navigator: Navigator
-    let viewController: SplashViewPresenter
+    weak var viewController: SplashViewPresenter?
             
-    init(navigator: Navigator, viewController: SplashViewPresenter) {
+    init(navigator: Navigator) {
         self.navigator = navigator
-        self.viewController = viewController
     }
     
     func viewDidLoad() {
         navigator.toTweetList()
+    }
+    
+    func setViewDelegate(viewController: SplashViewPresenter) {
+        self.viewController = viewController
     }
 }

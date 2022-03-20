@@ -21,12 +21,18 @@ class TweetListViewController: BasePaginationViewController<TweetViewModel, Twee
         setupUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard let presenter = presenter as? TweetListPresenterView else { return }
+        presenter.viewWillDisappear()
+    }
+    
     func setupUI() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "What do you want to search?"
         navigationItem.searchController = searchController
         navigationController?.navigationBar.isHidden = false
-        self.navigationItem.setHidesBackButton(true, animated: true)
+        self.navigationItem.setHidesBackButton(true, animated: false)
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
     }

@@ -23,8 +23,9 @@ final class NavigatorProvider {
                 navigationController: navigationController,
                 storyboard: storyboard)
         let vc = storyboard.instantiateViewController(ofType: SplashViewController.self)
-        let presenter = SplashPresenter(navigator: navigator, viewController: vc)
+        let presenter = SplashPresenter(navigator: navigator)
         vc.presenter = presenter
+        presenter.setViewDelegate(viewController: vc)
         return vc
     }
     
@@ -36,6 +37,19 @@ final class NavigatorProvider {
         let vc = storyboard.instantiateViewController(ofType: TweetListViewController.self)
         let presenter = TweetListPresenter(useCase: services.makeUseCase(),
                                                     navigator: navigator)
+        vc.presenter = presenter
+        presenter.setViewDelegate(viewController: vc)
+        return vc
+    }
+    
+    func makeTweetDetail(tweetId: String) -> UIViewController {
+        let storyboard = UIStoryboard(name: "TweetDetail", bundle: nil)
+        let navigator = DefaultNavigator(services: services, navigatorProvider: self,
+                navigationController: navigationController,
+                storyboard: storyboard)
+        let vc = storyboard.instantiateViewController(ofType: TweetDetailViewController.self)
+        let presenter = TweetDetailPresenter(useCase: services.makeUseCase(),
+                                             navigator: navigator, tweetId: tweetId)
         vc.presenter = presenter
         presenter.setViewDelegate(viewController: vc)
         return vc

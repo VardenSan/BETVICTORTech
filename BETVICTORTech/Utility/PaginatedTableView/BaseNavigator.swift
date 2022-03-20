@@ -9,5 +9,5 @@
 import Foundation
 
 protocol BaseNavigator {
-    func toItem(item: Any, indexPath: IndexPath)
+    func toItem(item: Any)
 }

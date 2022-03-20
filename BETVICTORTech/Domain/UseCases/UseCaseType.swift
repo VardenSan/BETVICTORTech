@@ -9,4 +9,5 @@ import Foundation
 
 public enum UseCaseType {
     case getTweets(params: String)
+    case getTweet(id: String)
 }

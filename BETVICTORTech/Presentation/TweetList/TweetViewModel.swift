@@ -30,7 +30,7 @@ final class TweetViewModel: BaseViewModel<Tweet> {
         guard let text = element.text, let range = text.range(of: searchText) else { return NSAttributedString() }
         let attributedString = NSMutableAttributedString(string: text)
         let convertedRange = NSRange(range, in: text)
-        attributedString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 17), range: convertedRange)
+        attributedString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 15), range: convertedRange)
         return attributedString
     }
 }

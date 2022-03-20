@@ -90,7 +90,7 @@ class BasePaginationViewController<ItemViewModel: BaseViewModel<Model>, Model, B
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        presenter?.itemSelected(item: viewModels[indexPath.row].element, indexPath: indexPath)
+        presenter?.itemSelected(position: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,7 +99,9 @@ class BasePaginationViewController<ItemViewModel: BaseViewModel<Model>, Model, B
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BasicTableViewCell.reuseID, for: indexPath) as! BasicTableViewCell
-        cell.bind(viewModels[indexPath.row])
+        if viewModels.count >= indexPath.row {
+            cell.bind(viewModels[indexPath.row])
+        }
         return cell
     }
     
