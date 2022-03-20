@@ -113,7 +113,13 @@ class TweetDetailViewController: BaseViewController, TweetDetailViewPresenter {
         if viewModel.hasGeolocation {
             mapView.isHidden = false
             let initialLocation = viewModel.geolocation
+            let annotation = MKPointAnnotation()
+            annotation.title = "Here!"
+            annotation.coordinate = initialLocation
+            mapView.addAnnotation(annotation)
             mapView.setCenter(initialLocation, animated: true)
+            let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 200000)
+            mapView.setCameraZoomRange(zoomRange, animated: true)
         } else {
             mapView.isHidden = true
         }
